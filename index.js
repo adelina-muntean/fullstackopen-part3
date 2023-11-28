@@ -41,6 +41,14 @@ app.get('/api/persons/:id', (request, response) => {
     }
 })
 
+// delete a person
+app.delete('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    persons = persons.filter(note => note.id !== id)
+  
+    response.status(204).end()
+})
+
 app.get('/info', (request, response) => {
     const totalPersons = persons.length
     const date = new Date()
