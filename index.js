@@ -55,15 +55,25 @@ app.delete('/api/persons/:id', (request, response) => {
 app.post('/api/persons', (request, response) => {
     const body = request.body
 
+    // error if name is missing
     if (!body.name) {
         return response.status(400).json({
             error: 'please enter a name for the person'
         })
     }
 
+    // error if number is missing
     if (!body.number) {
         return response.status(400).json({
             error: 'please enter a number for the person'
+        })
+    }
+
+    // error if name is duplicate
+    const names = persons.map(person => person.name)
+    if (names.includes(request.body.name)) { 
+        return response.status(400).json({
+            error: 'this person already exists in the phonebook'
         })
     }
 
